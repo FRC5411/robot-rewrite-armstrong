@@ -21,6 +21,39 @@ public class Constants {
         public static final DifferentialDriveKinematics kTankKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
 
         public static final double kSniperSpeedFactor = 0.4;
+
+        public static final double kBalanceVelocity = 1.0;
+        public static final double kBalanceAccel = 0.5;
+    }
+
+    public static class ArmConstants {
+        public static final int kArmMotor = 21;
+        public static final int kIntakeMotor = 22;
+
+        public static final double kArmEncoderCF = 22.755;
+
+        public static final int kArmMotorCurrentLimit = 60;
+        public static final int kIntakeMotorCurrentLimit = 50;
+
+        public static final int[] kArmEncoderDIOPorts = {0, 1};
+
+        public static final int kArmVelocity = 250;
+        public static final int kArmAccel = 100;
+
+        public static final int kConeHigh = 172;
+        public static final int kConeMid = 193;
+        public static final int kConeLow = 112;
+        public static final int kConeSub = 174;
+        public static final int kConeGround = 257;
+
+        public static final int kCubeHigh = 173;
+        public static final int kCubeMid = 142;
+        public static final int kCubeLow = 112;
+        public static final int kCubeSub = 178;
+        public static final int kCubeGround = 263;
+
+        public static final int kIdle = 0;
+        public static final double kArmFlat = 33.43;
     }
 
     public static class ControllerConstants {

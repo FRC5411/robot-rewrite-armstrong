@@ -147,6 +147,10 @@ public class DriveSubsystem extends SubsystemBase {
     return Rotation2d.fromDegrees(m_navX.getYaw());
   }
 
+  public double getPitch() {
+    return m_navX.getPitch();
+  }
+
   public Pose2d getPose() {
     return m_robotOdometry.getEstimatedPosition();
   }
