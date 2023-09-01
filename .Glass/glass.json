@@ -1,0 +1,33 @@
+{
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "Field": {
+          "open": true
+        },
+        "Left Back": {
+          "open": true
+        },
+        "Left Front": {
+          "open": true
+        },
+        "Right Back": {
+          "open": true
+        },
+        "Right Front": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Driver Chooser/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/Field": "Field2d"
+    }
+  },
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "9105"
+  }
+}
