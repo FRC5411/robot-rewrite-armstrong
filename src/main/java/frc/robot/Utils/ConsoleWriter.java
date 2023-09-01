@@ -3,7 +3,7 @@ package frc.robot.Utils;
 
 public class ConsoleWriter {
 
-    private static final boolean isVS = true;
+    private static final boolean isVS = false;
 
     /**
      * Basic class to print messages with colour. Useful for

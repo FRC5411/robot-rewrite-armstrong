@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Utils.ConsoleWriter;
-import frc.robot.Utils.SparkMaxConfigs;
+import frc.robot.Utils.Configs;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -42,22 +42,22 @@ public class DriveSubsystem extends SubsystemBase {
   private Field2d m_field;
 
   public DriveSubsystem() {
-    m_leftFrontMotor = SparkMaxConfigs.NEO(DriveConstants.kLeftFront, 
+    m_leftFrontMotor = Configs.NEO(DriveConstants.kLeftFront, 
       false);
-    m_leftBackMotor = SparkMaxConfigs.NEO(DriveConstants.kLeftBack, 
+    m_leftBackMotor = Configs.NEO(DriveConstants.kLeftBack, 
       false);
-    m_rightFrontMotor = SparkMaxConfigs.NEO(DriveConstants.kRightFront, 
+    m_rightFrontMotor = Configs.NEO(DriveConstants.kRightFront, 
       true);
-    m_rightBackMotor = SparkMaxConfigs.NEO(DriveConstants.kRightBack, 
+    m_rightBackMotor = Configs.NEO(DriveConstants.kRightBack, 
       true);
 
-    m_leftFrontEncoder = SparkMaxConfigs.RelativeEncoder(m_leftFrontMotor, 
+    m_leftFrontEncoder = Configs.RelativeEncoder(m_leftFrontMotor, 
       DriveConstants.kLinearDistanceConversion);
-    m_leftBackEncoder = SparkMaxConfigs.RelativeEncoder(m_leftBackMotor, 
+    m_leftBackEncoder = Configs.RelativeEncoder(m_leftBackMotor, 
       DriveConstants.kLinearDistanceConversion);
-    m_rightFrontEncoder = SparkMaxConfigs.RelativeEncoder(m_rightFrontMotor, 
+    m_rightFrontEncoder = Configs.RelativeEncoder(m_rightFrontMotor, 
       DriveConstants.kLinearDistanceConversion);
-    m_rightBackEncoder = SparkMaxConfigs.RelativeEncoder(m_rightBackMotor, 
+    m_rightBackEncoder = Configs.RelativeEncoder(m_rightBackMotor, 
       DriveConstants.kLinearDistanceConversion);
 
     m_leftMotors = new MotorControllerGroup(m_leftFrontMotor, m_leftBackMotor);
@@ -155,10 +155,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SparkMaxConfigs.configureTelemetry(m_leftFrontMotor, m_leftFrontEncoder, "Left Front");
-    SparkMaxConfigs.configureTelemetry(m_leftBackMotor, m_leftBackEncoder, "Left Back");
-    SparkMaxConfigs.configureTelemetry(m_rightFrontMotor, m_rightFrontEncoder, "Right Front");
-    SparkMaxConfigs.configureTelemetry(m_rightBackMotor, m_rightBackEncoder, "Right Back");
+    Configs.configureTelemetry(m_leftFrontMotor, m_leftFrontEncoder, "Left Front");
+    Configs.configureTelemetry(m_leftBackMotor, m_leftBackEncoder, "Left Back");
+    Configs.configureTelemetry(m_rightFrontMotor, m_rightFrontEncoder, "Right Front");
+    Configs.configureTelemetry(m_rightBackMotor, m_rightBackEncoder, "Right Back");
 
     if (getTemperature(m_leftBackMotor) > 50) { ConsoleWriter.printError("leftBackMotor is above operating temperature: " + 50 + "C", getName());}
 
