@@ -3,6 +3,8 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,6 +28,8 @@ public class RobotContainer {
   private ArmSubsystem m_robotArm;
   private IntakeSubsystem m_robotIntake;
 
+  private PowerDistribution m_PDH;
+
   private CommandXboxController m_controller;
   private CommandGenericHID m_buttonBoard;
 
@@ -35,6 +39,8 @@ public class RobotContainer {
     m_robotDrive = new DriveSubsystem();
     m_robotArm = new ArmSubsystem();
     m_robotIntake = new IntakeSubsystem();
+
+    m_PDH = new PowerDistribution(ControllerConstants.kPDhPort, ModuleType.kRev);
 
     m_controller = new CommandXboxController(ControllerConstants.kControllerPort);
     m_buttonBoard = new CommandGenericHID(ControllerConstants.kButtonBoardPort);
@@ -108,9 +114,13 @@ public class RobotContainer {
     // Toggle Mode
     m_buttonBoard.button(5)
       .toggleOnTrue(new InstantCommand( () -> {
-      ArmStates.sIsCone = true; }))
+      ArmStates.sIsCone = true;
+      m_PDH.setSwitchableChannel(true);
+     }))
       .toggleOnFalse(new InstantCommand( () -> {
-      ArmStates.sIsCone = false; }));
+      ArmStates.sIsCone = false; 
+      m_PDH.setSwitchableChannel(false);
+    }));
 
     // Arm Sniper
     m_buttonBoard.button(11)

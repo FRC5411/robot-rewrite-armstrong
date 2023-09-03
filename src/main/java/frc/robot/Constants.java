@@ -63,5 +63,7 @@ public class Constants {
     public static class ControllerConstants {
         public static final int kControllerPort = 0;
         public static final int kButtonBoardPort = 1;
+
+        public static final int kPDhPort = 1;
     }
 }
