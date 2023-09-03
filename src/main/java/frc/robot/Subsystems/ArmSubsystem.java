@@ -6,7 +6,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -19,32 +18,21 @@ import frc.robot.Utils.ConsoleWriter;
 public class ArmSubsystem extends SubsystemBase {
 
   private CANSparkMax m_armMotor;
-  private CANSparkMax m_intakeMotor;
 
   private RelativeEncoder m_armRelativeEncoder;
-  private RelativeEncoder m_intakeRelativeEncoder;
 
   private Encoder m_armEncoder;
-
-  private boolean m_isSafeToRunIntake;
 
   public ArmSubsystem() {
     m_armMotor = Configs.NEO(ArmConstants.kArmMotor, 
       false,
       ArmConstants.kArmMotorCurrentLimit, 
       IdleMode.kBrake);
-    m_intakeMotor = Configs.NEO(ArmConstants.kIntakeMotor, 
-      false, 
-      ArmConstants.kIntakeMotorCurrentLimit, 
-      IdleMode.kBrake);
 
     m_armRelativeEncoder = m_armMotor.getEncoder();
-    m_intakeRelativeEncoder = m_intakeMotor.getEncoder();
 
     m_armEncoder = new Encoder(ArmConstants.kArmEncoderDIOPorts[0], 
       ArmConstants.kArmEncoderDIOPorts[1]);
-
-    m_isSafeToRunIntake = false;
   }
 
   private double boreConversion(double measurement) {
@@ -58,10 +46,18 @@ public class ArmSubsystem extends SubsystemBase {
     else { ConsoleWriter.printError("Cannot move arm", getName()); }
   }
 
-  public void setIntake(double speed) {
-    if (m_isSafeToRunIntake) { m_intakeMotor.set(speed); }
-    else { ConsoleWriter.printError("Cannot run intake", getName()); }
+  public void setArm(double speed, boolean sniper) {
+    if (isSafeToMoveArm(speed)) { 
+      if (sniper) {
+        m_armMotor.set(speed * 0.5);
+      }
+      else {
+        m_armMotor.set(speed);
+      }
+    }
+    else { ConsoleWriter.printError("Cannot move arm", getName()); }
   }
+
   /* ---------------------------------------------------------------------------------------- */
 
   public FunctionalCommand holdArm(ArmSubsystem robotArm) {
@@ -91,16 +87,6 @@ public class ArmSubsystem extends SubsystemBase {
     return true;
   }
 
-  public boolean isSafeToRunIntake(int intakeCurrentLimit) {
-    LinearFilter filter = LinearFilter.movingAverage(25);
-    double filterCalculation = filter.calculate(getIntakeOutputCurrent());
-
-    if (filterCalculation > intakeCurrentLimit) {
-      return false;
-    }
-    return true;
-  }
-
   /* ---------------------------------------------------------------------------------------- */
 
   public double getArmPosition() {
@@ -119,10 +105,6 @@ public class ArmSubsystem extends SubsystemBase {
     return m_armMotor.getOutputCurrent();
   }
 
-  public double getIntakeOutputCurrent() {
-    return m_intakeMotor.getOutputCurrent();
-  }
-
   public double getXAxisArmAngle() {
     double ffAngleDegs = getArmPosition() - ArmConstants.kArmFlat;
 
@@ -137,9 +119,5 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() {
     Configs.configureTelemetry(m_armMotor, m_armEncoder, ArmConstants.kArmEncoderCF,"Arm Motor");
     SmartDashboard.putNumber("Arm Motor/Arm Speed", m_armMotor.get());
-
-    Configs.configureTelemetry(m_intakeMotor, m_intakeRelativeEncoder, "Intake Motor");
-
-    m_isSafeToRunIntake = isSafeToRunIntake(ArmConstants.kIntakeMotorCurrentLimit);
   }
 }

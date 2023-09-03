@@ -28,12 +28,10 @@ public class Constants {
 
     public static class ArmConstants {
         public static final int kArmMotor = 21;
-        public static final int kIntakeMotor = 22;
 
         public static final double kArmEncoderCF = 22.755;
 
         public static final int kArmMotorCurrentLimit = 60;
-        public static final int kIntakeMotorCurrentLimit = 50;
 
         public static final int[] kArmEncoderDIOPorts = {0, 1};
 
@@ -56,7 +54,14 @@ public class Constants {
         public static final double kArmFlat = 33.43;
     }
 
+    public static class IntakeConstants {
+        public static final int kIntakeMotor = 22;
+
+        public static final int kIntakeMotorCurrentLimit = 50;
+    }
+
     public static class ControllerConstants {
         public static final int kControllerPort = 0;
+        public static final int kButtonBoardPort = 1;
     }
 }

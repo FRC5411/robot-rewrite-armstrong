@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.RobotStates.ArmStates;
 import frc.robot.Subsystems.ArmSubsystem;
 import frc.robot.Utils.ConsoleWriter;
 
@@ -23,6 +24,7 @@ public class ArmCommand extends ProfiledPIDCommand {
         () -> getSetpoint(goal, isCone),
         // This uses the output
         (output, setpoint) -> {
+          ArmStates.sShouldHoldArm = false;
           robotArm.setArm(output);
         }, 
         robotArm);

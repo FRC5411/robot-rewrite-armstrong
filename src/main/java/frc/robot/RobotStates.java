@@ -12,5 +12,6 @@ public class RobotStates {
     public static class ArmStates {
         public static boolean sIsCone = false;
         public static boolean sShouldHoldArm = false;
+        public static boolean sIsArmInSniper = false;
     }
 }

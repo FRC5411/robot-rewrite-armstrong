@@ -35,6 +35,17 @@ public class ConsoleWriter {
         else { System.out.println("WARNING: " + spacePrefix(space) + " " + x); }
     }
 
+        /**
+     * Prints a message in yellow text to console
+     * 
+     * @param x Message to print to console
+     * @param space Class that this is being called from
+     */
+    public static void printMessage(String x, String space) {
+        if (isVS) {System.out.println("\033[32mCONSOLE:\033[0m" + spacePrefix(space) + "\033[32m " + x + "\033[0m"); }
+        else { System.out.println("CONSOLE: " + spacePrefix(space) + " " + x); }
+    }
+
     private static String spacePrefix(String space) {
         return space + "/ ";
     }
